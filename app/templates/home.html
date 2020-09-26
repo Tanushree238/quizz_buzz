@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Happy Birthday</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js" integrity="sha512-rFun1mEMg3sNDcSjeGP35cLIycsS+og/QtN6WWnoSviHU9ykMLNQp7D1uuG1AzTV2w0VmyFVpszi2QJwiVW6oQ==" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/32ee507fe4.js" crossorigin="anonymous"></script>
+</head>
+<style>
+	body{
+		overflow: hidden;
+		background-image:url("/static/bg3.jpg");
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		height: 100vh;
+	}
+	#magazine{
+			width:60vw;
+			height:86.5vh;
+			margin:50px auto;
+			
+	}
+	#magazine .turn-page{
+		background-color:rgba(256,256,256);
+	}		
+	#magazine .even_page{
+		border-left:2px solid black;
+	}
+	#magazine .hard{
+		box-shadow: -50px 50px 50px rgba(0, 0, 0, 0.5) !important;
+	}
+	.fcover{
+		width: 500px;
+		height: 83vh;
+		border-bottom-right-radius: .5em;
+	  	border-top-right-radius: .5em;
+	}
+
+	.h2{
+		font-style: italic;
+		text-align: center;
+	}
+
+	.paragraph{
+		font-size: 20px;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	.pnum{
+		text-align: right;
+		margin-right: 20px;
+	}
+
+	i {
+		font-style: italic;
+	}
+
+	.bcover{
+		width: 500px;
+		height: 83vh;
+		border-bottom-left-radius: .5em;
+	  	border-top-left-radius: .5em;
+	}
+
+	#get_started_btn{
+		position: absolute;bottom: 10px;left: 50%;transform: translateX(-50%);
+	}
+	.page4{
+	  border-bottom-left-radius: .5em;
+	  border-top-left-radius: .5em;
+	  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2) !important;
+	}
+	.page3{
+	  border-bottom-right-radius: .5em;
+	  border-top-right-radius: .5em;
+	  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2) !important;
+	}
+	.answer{
+		position: absolute;
+		bottom: 12%;
+		right: 12%;
+	}
+	.full_modal .modal-content{background: #fff; border: none;border-radius: 0;}
+	.hashtag{
+		word-break: break-word;
+	}
+	.next_btn{
+		position: absolute;
+		bottom: 5%;
+		right: 5%;
+	}
+</style>
+<body class="">
+	<div class="container">
+		<div id="magazine">
+			<div class="even_page hard page3">
+				<button class="btn btn-primary" id="get_started_btn">GET STARTED!</button>
+				<img class= "fcover img-fluid mx-2 my-2" src ="/static/puzzle_final.png">
+			</div>
+			{% for question in questions %}
+  				<div class="page4">
+  					<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-5">
+						<h1 class="hashtag"><i>{{ question.hashtag }}</i></h1>
+					</div>
+  				</div>
+  				{% if question.options %}
+					<div class="even_page page3" id="q_{{question['no.']}}">
+						<div class="d-flex flex-column align-items-center justify-content-center h-75 px-5">
+							<span id="type_{{question['no.']}}" class="d-none">MCQ</span>
+							<h4>{{ question.statement }}</h4>
+							<div class="row mx-0 my-4 text-left px-5">
+								<div class="col-md-12">
+									{% for option in question.options.split("|") %}
+										<input type="radio" name="ans{{question['no.']}}" value="{{ option }}" onchange="handlesubmit(this)">
+		  								<label for="{{ option }}">{{ option }}</label><br>
+	  								{% endfor %}
+	  								<p id="corr_ans{{question['no.']}}" class="d-none">{{ question.answer }}</p>
+								</div>
+							</div>	
+							<button class="btn btn-success answer d-none" id="submit_{{question['no.']}}">Submit</button>
+						</div>
+					</div>
+				{% else %}
+					<div class="even_page page3" id="q_{{question['no.']}}">
+						<div class="d-flex flex-column align-items-center justify-content-center h-75 px-5">
+							<span id="type_{{question['no.']}}" class="d-none">Text</span>
+							<h4>{{ question.statement }}</h4>
+							<div class="row mx-0 my-4 text-left px-5">
+								<div class="col-md-12 text-center">
+									<pre id="blanks_{{question['no.']}}">_ A  _ _ _ _</pre>
+									<input type="text" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control"  onchange="handleinput(this)">
+									<p class="error d-none text-danger mb-0">*One alphabet only.</p>
+	  								<p id="corr_ans{{question['no.']}}" class="d-none">{{ question.answer }}</p>
+								</div>
+							</div>	
+							<button class="btn btn-success check" id="submit_{{question['no.']}}">Check</button>
+						</div>
+					</div>
+				{% endif %}
+				<div class="page4">
+					<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-5">
+						<h1 class="hashtag" id="result_hashtag{{question['no.']}}"><i></i></h1>
+					</div>
+				</div>
+				<div class="even_page page3 ">
+					<div class="p-3 text-center d-none" id="result_text{{question['no.']}}">
+						<h4 class="px-5"><i>
+							
+						</i></h4>
+						<button class="btn next_btn">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
+					</div>
+					<div class="p-3 text-center d-none" id="result_image{{question['no.']}}">
+						<img src="" class="img-fluid">
+						<button class="btn next_btn">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			{% endfor %}	
+			<div class="page4">
+				<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-4">
+					<h1 class="pb-5 hashtag"><i>#Behekne_wale_sabhi_h_samjhane_vale_bano</i></h1>
+				</div>
+			</div>
+			<div class="even_page page3 ">
+				<div class="d-flex flex-column flex_wrap align-items-center justify-content-center h-75 px-4">
+					<h1 class="pb-5 hashtag"><i>#I_am_Leaving_Discuss_By_Yourself</i></h1>
+					<button class="btn next_btn">
+						<i class="fa fa-arrow-right" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<div class="hard page4 text-center">
+				<img class= "bcover img-fluid h-100" src ="/static/back_cover.png">
+			</div>
+		</div>
+	</div>
+<div id="sorry_modal" class="modal full_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-body bg-light">
+	    	<img src="/static/sorry.gif" class="img-fluid w-100">
+	    </div>
+    </div>
+   </div>
+</div>
+
+<div id="party_modal" class="modal full_modal w-100">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-body bg-light">
+    		<img src="/static/party3.gif" class="img-fluid w-100">
+    	</div>
+    </div>
+   </div>
+</div>
+</body>
+
+<script>
+	function handlesubmit(element){
+		var id = $(element).attr('name').substring(3);
+		$("#submit_"+id).removeClass("d-none").addClass("d-block");
+	}
+
+
+	$(document).ready(function(){
+
+		$(window).ready(function() {
+			$('#magazine').turn({
+				autoCenter: true,
+				display: 'double',
+				acceleration: false,
+				gradients: !$.isTouch,
+				elevation:120,
+				when: {
+						turned: function(e, page) {
+								 /*console.log('Current view: ', $(this).turn('view'));*/
+						}
+				}
+		 	});
+		});
+
+		$(document).on('click','#get_started_btn',function(){
+			$('#magazine').turn('next');
+		});	
+
+		$(document).on('click','.next_btn',function(){
+			$('#magazine').turn('next');
+		});
+			
+		$(document).on('click','.check',function(){
+			var val = $($(this).parent().find('input')).val();
+			var id = $($(this).parent().find('input')).attr('name').substring(3);
+			if (val.length==1){
+				$(".error").removeClass("d-block").addClass("d-none");
+				$('#magazine').turn('next');
+			} else{
+				$(".error").removeClass("d-none").addClass("d-block");
+			}
+		});
+
+		function get_result(id){
+			$.ajax({
+				type : "GET",
+				url : "/get_result/"+id,
+				success : function(response){
+					var id=response["id"].split("_")[1];
+					console.log(response);
+					$("#result_hashtag"+id).find('i').text(response['hashtag']);
+					if (response["type"]=="text"){
+						$("#result_text"+id).find('i').text(response['content']);
+						$("#result_text"+id).removeClass("d-none").addClass("d-block");
+					} else{
+						console.log($("#result_image"+id).find('img'));
+						$("#result_image"+id).find('img').attr('src',"/static/"+response['content']);
+						$("#result_image"+id).removeClass("d-none").addClass("d-block");
+					}
+					setTimeout(function(){ 
+						$("#party_modal").modal("hide");
+						$("#sorry_modal").modal("hide");
+				 }, 2500);
+				}
+			});
+		}
+
+		$(document).on('click','.answer',function(){
+			var id=$(this).attr('id').split("_")[1];
+			var given_ans=$("input[name='ans"+id+"']:checked").val().trim();
+			var correct_ans=$("#corr_ans"+id).text().trim();
+			if (given_ans==correct_ans){
+				get_result("r_"+id);
+				$("#party_modal").modal("show");
+				$('#magazine').turn('next');
+			} else{
+				get_result("w_"+id);
+				$("#sorry_modal").modal("show");
+				$('#magazine').turn('next');
+			}
+			
+			
+		});
+
+		$(window).bind('keydown', function(e){
+				if (e.keyCode==37)
+						$('#magazine').turn('previous');
+				else if (e.keyCode==39){
+						$('#magazine').turn('next');	
+				}
+						// $('#magazine').turn('next');
+		});
+	});
+</script>
+</html>

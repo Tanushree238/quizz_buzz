@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Happy Birthday</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js" integrity="sha512-rFun1mEMg3sNDcSjeGP35cLIycsS+og/QtN6WWnoSviHU9ykMLNQp7D1uuG1AzTV2w0VmyFVpszi2QJwiVW6oQ==" crossorigin="anonymous"></script>
+</head>
+<style>
+	html,
+body {
+  background-color: #efefef;
+  height: 100%;
+  margin: 0;
+  /*overflow: hidden;*/
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  height: 90%;
+  justify-content: center;
+  margin: 5%;
+  width: 90%;
+}
+
+.aspect {
+  padding-bottom: 70%;
+  position: relative;
+  width: 100%;
+}
+
+.aspect-inner {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.flipbook {
+  height: 100%;
+  transition: margin-left 0.25s ease-out;
+  width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.flipbook .page {
+  height: 100%;
+  width: 100%;
+}
+
+.flipbook .page img {
+  max-width: 100%;
+  height: 100%;
+}
+</style>
+<body>
+<div class="wrapper">
+  <div class="aspect">
+    <div class="aspect-inner">
+      <div class="flipbook" id="flipbook">
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/01.jpg" draggable="false" alt="" /></div>
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/02.jpg" draggable="false" alt="" /></div>
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/03.jpg" draggable="false" alt="" /></div>
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/04.jpg" draggable="false" alt="" /></div>
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/05.jpg" draggable="false" alt="" /></div>
+        <div class="page"><img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/06.jpg" draggable="false" alt="" /></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+	// $(document).ready(function(){
+	var flipbookEL = document.getElementById('flipbook');
+
+	window.addEventListener('resize', function (e) {
+		flipbookEL.style.width = '';
+	  flipbookEL.style.height = '';
+	  $(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
+	});
+
+	$(flipbookEL).turn({
+	    autoCenter: true
+	})
+	// });
+</script>
+</html>
