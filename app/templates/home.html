@@ -66,7 +66,8 @@
 	}
 
 	#get_started_btn{
-		position: absolute;bottom: 10px;left: 50%;transform: translateX(-50%);
+		position: absolute;bottom: 10px;left: 50%;transform: translateX(-30%);
+		padding: 8px 20px;
 	}
 	.page4{
 	  border-bottom-left-radius: .5em;
@@ -136,17 +137,22 @@
 					</div>
 				{% else %}
 					<div class="even_page page3" id="q_{{question['no.']}}">
-						<div class="d-flex flex-column align-items-center justify-content-center h-75 px-5">
+						<div class="d-flex flex-column align-items-center justify-content-center h-100 px-5">
 							<span id="type_{{question['no.']}}" class="d-none">Text</span>
 							<h4>{{ question.statement }}</h4>
 							<div class="question_data row mx-0 my-4 text-left px-5">
 								<div class="col-md-12 text-center">
 									<pre id="blanks_{{question['no.']}}">_ A  _ _ _ _</pre>
-									<input type="text" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control">
+									<input type="text" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control"
+									 onclick="handleinput(this)" autocomplete="off">
 									<p class="error d-none text-danger mb-0">*One alphabet only.</p>
 	  								<p id="corr_ans{{question['no.']}}" class="word_ans d-none">{{ question.answer }}</p>
 								</div>
 							</div>	
+							<div id="badtry_{{question['no.']}}" class="d-none text-center">
+								<img src="/static/bad_try.gif">
+								<h6></h6>
+							</div>
 							<button class="btn btn-success check" id="submit_{{question['no.']}}">Check</button>
 						</div>
 					</div>
@@ -160,7 +166,7 @@
 				</div>
 				<div class="even_page page3 ">
 					<div class="p-3 text-center d-none" id="result_text{{question['no.']}}">
-						<h4 class="px-5"><i></i></h4>
+						<h4 class="px-5"><i class="content_block"></i></h4>
 						<button class="btn next_btn">
 							<i class="fa fa-arrow-right" aria-hidden="true"></i>
 						</button>
@@ -222,6 +228,14 @@
 		$("#submit_"+id).removeClass("d-none").addClass("d-block");
 	}
 
+	function handleinput(element){
+		var id = $(element).attr('name').substring(3);
+		console.log(id);
+		$("#badtry_"+id).removeClass("d-block").addClass("d-none");
+		$("#badtry_"+id).find('h6').text("")
+	}
+	
+
 	var original_ans = $(".word_ans");
 	for( var i=0; i< original_ans.length; i++ ){
         var ans_original = $(original_ans[i]).text().trim();
@@ -268,7 +282,8 @@
 		});
 
 		$(document).on('click','.check',function(){
-			var val = $($(this).parent().find('input')).val();
+			var val = $($(this).parent().find('input')).val().toLowerCase();
+			$($(this).parent().find('input')).val( '' );
 			var ans_original = $(this).parent().find('[id^=corr_ans]').text().trim();
 			var blanks_block = $(this).parent().find('[id^=blanks_]');
 			var ans = ans_original.toLowerCase();
@@ -292,24 +307,29 @@
 					});
 					$( blanks_block ).text( new_blank_string );
 					if( new_blank_string.indexOf("_")===-1 && new_blank_string.replace(/\s/g,"").toLowerCase()===ans.replace(/\s/g,"") ){
-						alert("You Win!");
-						window.char_record = new Set();
+						get_result("r_"+id);
+						$("#party_modal").modal("show");
 						$('#magazine').turn('next');
+						window.char_record = new Set();
+						window.word_try = 0;
 					}
 				}else{
 					//show crose
 					window.word_try += 1;
 					if( window.word_try>=3 ){
-						alert("Yoo Loose")
+						get_result("w_"+id);
+						$("#sorry_modal").modal("show");
+						$('#magazine').turn('next');
 					}else{
-						alert("Worng Character "+ (3-window.word_try) +" Trys Left!!");
+						$("#badtry_"+id).removeClass("d-none").addClass("d-block");
+						$("#badtry_"+id).find('h6').text((3-window.word_try) +" Tries Left!!")
 					}
 				}
 			} else{
 				$(".error").removeClass("d-none").addClass("d-block");
 			}
 		});
-
+		
 		function get_result(id){
 			$.ajax({
 				type : "GET",
@@ -319,7 +339,7 @@
 					console.log(response);
 					$("#result_hashtag"+id).find('i').text(response['hashtag']);
 					if (response["type"]=="text"){
-						$("#result_text"+id).find('i').text(response['content']);
+						$("#result_text"+id).find('.content_block').text(response['content']);
 						$("#result_text"+id).removeClass("d-none").addClass("d-block");
 					} else{
 						console.log($("#result_image"+id).find('img'));
@@ -355,7 +375,7 @@
 				if (e.keyCode==37)
 						$('#magazine').turn('previous');
 				else if (e.keyCode==39){
-						$('#magazine').turn('next');	
+						// $('#magazine').turn('next');	
 				}
 						// $('#magazine').turn('next');
 		});

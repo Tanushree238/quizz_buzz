@@ -1,1 +1,1 @@
-image|puzzle_final.png
+image|pic/1.png
