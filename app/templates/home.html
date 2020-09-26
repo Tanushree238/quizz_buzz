@@ -11,7 +11,7 @@
 <style>
 	body{
 		overflow: hidden;
-		background-image:url("/static/bg3.jpg");
+		background-image:url("/static/12837.jpg");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		height: 100vh;
@@ -84,6 +84,15 @@
 		right: 12%;
 	}
 	.full_modal .modal-content{background: #fff; border: none;border-radius: 0;}
+	.hash_bg{
+		background-image:url("/static/hash_bg.jpg");
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+	.hash_bg_layer{
+		background-color:rgba(256,256,256,0.2);
+		background-size: 100% 100%;
+	}
 	.hashtag{
 		word-break: break-word;
 	}
@@ -102,8 +111,10 @@
 			</div>
 			{% for question in questions %}
   				<div class="page4">
-  					<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-5">
-						<h1 class="hashtag"><i>{{ question.hashtag }}</i></h1>
+  					<div class="hash_bg h-100">
+  						<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+							<h1 class="hashtag"><i>{{ question.hashtag }}</i></h1>
+						</div>
 					</div>
   				</div>
   				{% if question.options %}
@@ -141,15 +152,15 @@
 					</div>
 				{% endif %}
 				<div class="page4">
-					<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-5">
-						<h1 class="hashtag" id="result_hashtag{{question['no.']}}"><i></i></h1>
+					<div class="hash_bg h-100">
+  						<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+							<h1 class="hashtag" id="result_hashtag{{question['no.']}}"><i></i></h1>
+						</div>
 					</div>
 				</div>
 				<div class="even_page page3 ">
 					<div class="p-3 text-center d-none" id="result_text{{question['no.']}}">
-						<h4 class="px-5"><i>
-							
-						</i></h4>
+						<h4 class="px-5"><i></i></h4>
 						<button class="btn next_btn">
 							<i class="fa fa-arrow-right" aria-hidden="true"></i>
 						</button>
@@ -163,16 +174,20 @@
 				</div>
 			{% endfor %}	
 			<div class="page4">
-				<div class="d-flex flex_wrap align-items-center justify-content-center h-75 px-4">
-					<h1 class="pb-5 hashtag"><i>#Behekne_wale_sabhi_h_samjhane_vale_bano</i></h1>
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<h1 class="pb-5 hashtag"><i>#Behekne_wale_sabhi_h_samjhane_vale_bano</i></h1>
+					</div>
 				</div>
 			</div>
-			<div class="even_page page3 ">
-				<div class="d-flex flex-column flex_wrap align-items-center justify-content-center h-75 px-4">
-					<h1 class="pb-5 hashtag"><i>#I_am_Leaving_Discuss_By_Yourself</i></h1>
-					<button class="btn next_btn">
-						<i class="fa fa-arrow-right" aria-hidden="true"></i>
-					</button>
+			<div class="even_page page3">
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<h1 class="pb-5 hashtag"><i>#I_am_Leaving_Discuss_By_Yourself</i></h1>
+						<button class="btn next_btn">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 			<div class="hard page4 text-center">
@@ -232,7 +247,7 @@
 		$(document).on('click','.next_btn',function(){
 			$('#magazine').turn('next');
 		});
-			
+
 		$(document).on('click','.check',function(){
 			var val = $($(this).parent().find('input')).val();
 			var id = $($(this).parent().find('input')).attr('name').substring(3);

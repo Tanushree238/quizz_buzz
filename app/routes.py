@@ -14,7 +14,6 @@ def home():
 		question["options"]=f[x*4+1].strip("\n")
 		question["answer"]=f[x*4+2].strip("\n")[2:]
 		questions.append(question)
-	print(questions)
 	return render_template('home.html',questions=questions)
 
 
@@ -26,7 +25,6 @@ def get_result(ans_id):
 	with open("app/"+ans_id+".txt",'r',encoding="utf8") as f:
 		result=f.read()
 	type,content=result.split("|")
-	print(type,content)
 	return jsonify({'id':ans_id,'type':type,'content':content,'hashtag':hashtag})
 	
 
