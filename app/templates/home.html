@@ -211,13 +211,23 @@
 	for( var i=0; i< original_ans.length; i++ ){
         var ans_original = $(original_ans[i]).text().trim();
 		var ans = ans_original.toLowerCase();
-		console.log( ans_original );
-		$( original_ans[i] ).siblings("[id^=blanks_]").text( '_ '.repeat( ans.length-1 ) + "_" );
+		var dash_string = "";
+		for( var j=0; j<ans.length; j++){
+			var end_with;
+			(j===ans_original.length-1) ? end_with="" : end_with=" ";
+			if(ans[j]===" "){
+				dash_string += " "+end_with;
+			}else{
+				dash_string += "_"+end_with;
+			}
+		}
+		$( original_ans[i] ).siblings("[id^=blanks_]").text( dash_string );
 	}
 
 	$(document).ready(function(){
 
 		window.char_record = new Set();
+		window.word_try = 0;
 
 		$(window).ready(function() {
 			$('#magazine').turn({
@@ -259,6 +269,8 @@
 						(i===ans_original.length-1) ? end_with="" : end_with=" "; 
 						if( window.char_record.has(element) ){
 							new_blank_string += ans_original[i]+end_with;
+						}else if( element===" " ){
+							new_blank_string += " "+end_with;
 						}else{
 							new_blank_string += "_"+end_with;
 						}
@@ -271,7 +283,12 @@
 					}
 				}else{
 					//show crose
-					alert("Worng Character!!");
+					window.word_try += 1;
+					if( window.word_try>=3 ){
+						alert("Yoo Loose")
+					}else{
+						alert("Worng Character "+ (3-window.word_try) +" Trys Left!!");
+					}
 				}
 			} else{
 				$(".error").removeClass("d-none").addClass("d-block");
