@@ -37,6 +37,7 @@
 	.fcover{
 		width: 500px;
 		height: 85vh;
+		max-height: 88vh;
 		border-bottom-right-radius: .5em;
 	  	border-top-right-radius: .5em;
 	  	transition: 1s;
@@ -123,6 +124,7 @@
 	}
 	.home_card .img-fluid{
 		height: 90vh;
+		max-height: 90vh;
 	}
 	.home_card #get_started_btn{
 		position: absolute;bottom: 37px;left: 50%;transform: translateX(-50%);
@@ -189,7 +191,7 @@
 								<img src="/static/bad_try.gif">
 								<h6></h6>
 							</div>
-							<button class="btn btn-success check" id="submit_{{question['no.']}}">Check</button>
+							<!-- <button class="btn btn-success check" id="submit_{{question['no.']}}">Check</button> -->
 						</div>
 					</div>
 				{% endif %}
@@ -453,7 +455,7 @@
 				if (e.keyCode==37)
 						$('#magazine').turn('previous');
 				else if (e.keyCode==39){
-						$('#magazine').turn('next');	
+						// $('#magazine').turn('next');	
 				}
 						// $('#magazine').turn('next');
 		});
