@@ -21,7 +21,7 @@ def home():
 def get_result(ans_id):
 	h = list(open("app/hash_Tags.txt", "r"))
 	id=int(ans_id.split("_")[1])
-	hashtag=h[id+20]
+	hashtag=h[id+19]
 	with open("app/"+ans_id+".txt",'r',encoding="utf8") as f:
 		result=f.read()
 	type,content=result.split("|")

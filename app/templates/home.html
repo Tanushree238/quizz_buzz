@@ -16,6 +16,9 @@
 		background-size: 100% 100%;
 		height: 100vh;
 	}
+	img{
+		max-height: 75vh;
+	}
 	#magazine{
 			width:60vw;
 			height:86.5vh;
@@ -33,41 +36,45 @@
 	}
 	.fcover{
 		width: 500px;
-		height: 83vh;
+		height: 85vh;
 		border-bottom-right-radius: .5em;
 	  	border-top-right-radius: .5em;
+	  	transition: 1s;
 	}
-
 	.h2{
 		font-style: italic;
 		text-align: center;
 	}
-
 	.paragraph{
 		font-size: 20px;
 		margin-left: 20px;
 		margin-right: 20px;
 	}
-
 	.pnum{
 		text-align: right;
 		margin-right: 20px;
 	}
-
 	i {
 		font-style: italic;
 	}
-
 	.bcover{
 		width: 500px;
 		height: 83vh;
+		max-height: 88vh;
 		border-bottom-left-radius: .5em;
 	  	border-top-left-radius: .5em;
 	}
 
 	#get_started_btn{
-		position: absolute;bottom: 10px;left: 50%;transform: translateX(-30%);
-		padding: 8px 20px;
+		position: absolute;bottom: 10px;left: 50%;transform: translateX(-50%);
+		padding: 6px 40px;
+		border-radius:5px;
+		background-color: #22DDA1;
+		border:1px solid #22DDA1;
+		color:#111;
+	}
+	#get_started_btn:hover{
+		border:1px solid #111;
 	}
 	.page4{
 	  border-bottom-left-radius: .5em;
@@ -79,6 +86,9 @@
 	  border-top-right-radius: .5em;
 	  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2) !important;
 	}
+	.blanks{
+		word-break: break-all;
+	}
 	.answer{
 		position: absolute;
 		bottom: 12%;
@@ -89,10 +99,14 @@
 		background-image:url("/static/hash_bg.jpg");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
+		border-bottom-left-radius: .5em;
+	  	border-top-left-radius: .5em;
 	}
 	.hash_bg_layer{
 		background-color:rgba(256,256,256,0.2);
 		background-size: 100% 100%;
+		border-bottom-left-radius: .5em;
+	  	border-top-left-radius: .5em;
 	}
 	.hashtag{
 		word-break: break-word;
@@ -102,13 +116,35 @@
 		bottom: 5%;
 		right: 5%;
 	}
+	.home_card{
+		width: 40vw;
+		height: 95vh;
+		background: #fff;
+	}
+	.home_card .img-fluid{
+		height: 90vh;
+	}
+	.home_card #get_started_btn{
+		position: absolute;bottom: 37px;left: 50%;transform: translateX(-50%);
+		padding: 10px 40px;
+		border:1px solid #22DDA1;
+	}
+	.home_card #get_started_btn:hover{
+		position: absolute;bottom: 37px;left: 50%;transform: translateX(-50%);
+		border:1px solid #111;
+	}
+	
 </style>
 <body class="">
-	<div class="container">
+	<div class="container text-center">
+		<div class="home_card mx-auto my-3">
+			<button class="btn btn-primary" id="get_started_btn">GET STARTED!</button>
+			<img class= "img-fluid" src ="/static/puzzle_final.png">
+		</div>
 		<div id="magazine">
-			<div class="even_page hard page3">
+			<div class="even_page hard">
 				<button class="btn btn-primary" id="get_started_btn">GET STARTED!</button>
-				<img class= "fcover img-fluid mx-2 my-2" src ="/static/puzzle_final.png">
+				<img class= "fcover img-fluid" src ="/static/puzzle_final.png">
 			</div>
 			{% for question in questions %}
   				<div class="page4">
@@ -142,8 +178,8 @@
 							<h4>{{ question.statement }}</h4>
 							<div class="question_data row mx-0 my-4 text-left px-5">
 								<div class="col-md-12 text-center">
-									<pre id="blanks_{{question['no.']}}">_ A  _ _ _ _</pre>
-									<input type="text" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control"
+									<pre class="blanks" id="blanks_{{question['no.']}}">_ A  _ _ _ _</pre>
+									<input type="text" id="ques_input" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control"
 									 onclick="handleinput(this)" autocomplete="off">
 									<p class="error d-none text-danger mb-0">*One alphabet only.</p>
 	  								<p id="corr_ans{{question['no.']}}" class="word_ans d-none">{{ question.answer }}</p>
@@ -215,7 +251,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
     	<div class="modal-body bg-light">
-    		<img src="/static/party3.gif" class="img-fluid w-100">
+    		<img src="" class="img-fluid w-100">
     	</div>
     </div>
    </div>
@@ -234,7 +270,8 @@
 		$("#badtry_"+id).removeClass("d-block").addClass("d-none");
 		$("#badtry_"+id).find('h6').text("")
 	}
-	
+	window.char_record = new Set();
+	window.word_try = 0;
 
 	var original_ans = $(".word_ans");
 	for( var i=0; i< original_ans.length; i++ ){
@@ -246,6 +283,9 @@
 			(j===ans_original.length-1) ? end_with="" : end_with=" ";
 			if(ans[j]===" "){
 				dash_string += " "+end_with;
+			}else if( ans[j]==='\\' ){
+				dash_string += " \n"+end_with;
+				window.char_record.add("\\");
 			}else{
 				dash_string += "_"+end_with;
 			}
@@ -254,16 +294,13 @@
 	}
 
 	$(document).ready(function(){
-
-		window.char_record = new Set();
-		window.word_try = 0;
-
 		$(window).ready(function() {
 			$('#magazine').turn({
 				autoCenter: true,
 				display: 'double',
 				acceleration: false,
 				gradients: !$.isTouch,
+				page:2,
 				elevation:120,
 				when: {
 						turned: function(e, page) {
@@ -273,21 +310,30 @@
 		 	});
 		});
 
+		$('#magazine').css("display","none");
 		$(document).on('click','#get_started_btn',function(){
-			$('#magazine').turn('next');
+			if ($('.home_card').css("display")!="none"){
+				$('.home_card').css("display","none");
+				$('#magazine').css("display","block");
+			} else{
+				$('#magazine').turn('next');
+			}
+			
 		});	
 
 		$(document).on('click','.next_btn',function(){
 			$('#magazine').turn('next');
 		});
 
-		$(document).on('click','.check',function(){
+		$(document).on('keyup','#ques_input',function(){
 			var val = $($(this).parent().find('input')).val().toLowerCase();
 			$($(this).parent().find('input')).val( '' );
 			var ans_original = $(this).parent().find('[id^=corr_ans]').text().trim();
 			var blanks_block = $(this).parent().find('[id^=blanks_]');
 			var ans = ans_original.toLowerCase();
 			var id = $($(this).parent().find('input')).attr('name').substring(3);
+			$("#badtry_"+id).removeClass("d-block").addClass("d-none");
+			$("#badtry_"+id).find('h6').text("")
 			if (val.length==1){
 				var index = ans.indexOf(val);
 				if( index!==-1 ){
@@ -297,7 +343,9 @@
 					Array.from(ans).forEach( (element,i) => {
 						var end_with;
 						(i===ans_original.length-1) ? end_with="" : end_with=" "; 
-						if( window.char_record.has(element) ){
+						if( element==='\\' ){
+							new_blank_string += "\n"+end_with;
+						}else if( window.char_record.has(element) ){
 							new_blank_string += ans_original[i]+end_with;
 						}else if( element===" " ){
 							new_blank_string += " "+end_with;
@@ -306,20 +354,36 @@
 						}
 					});
 					$( blanks_block ).text( new_blank_string );
-					if( new_blank_string.indexOf("_")===-1 && new_blank_string.replace(/\s/g,"").toLowerCase()===ans.replace(/\s/g,"") ){
+					console.log(new_blank_string.replace(/\s/g,"").toLowerCase(),ans.replace(/\s/g,"").replace(/\\/g,""))
+					if( new_blank_string.indexOf("_")===-1 && new_blank_string.replace(/\s/g,"").toLowerCase()===ans.replace(/\s/g,"").replace(/\\/g,"") ){
 						get_result("r_"+id);
+						if (id%6==0){
+							gif="/static/party1.webp"
+						} else if (id%6==1){
+							gif="/static/party4.gif"
+						} else if (id%6==2){
+							gif="/static/party3.gif"
+						} else if (id%6==3){
+							gif="/static/party2.webp"
+						} else if (id%6==4){
+							gif="/static/party.webp"
+						} else if (id%6==5){
+							gif="/static/party6.gif"
+						}
+						$("#party_modal").find("img").attr("src",gif);
 						$("#party_modal").modal("show");
 						$('#magazine').turn('next');
 						window.char_record = new Set();
 						window.word_try = 0;
 					}
 				}else{
-					//show crose
 					window.word_try += 1;
 					if( window.word_try>=3 ){
 						get_result("w_"+id);
 						$("#sorry_modal").modal("show");
 						$('#magazine').turn('next');
+						window.char_record = new Set();
+						window.word_try = 0;
 					}else{
 						$("#badtry_"+id).removeClass("d-none").addClass("d-block");
 						$("#badtry_"+id).find('h6').text((3-window.word_try) +" Tries Left!!")
@@ -360,6 +424,20 @@
 			var correct_ans=$("#corr_ans"+id).text().trim();
 			if (given_ans==correct_ans){
 				get_result("r_"+id);
+				if (id%6==0){
+					gif="/static/party1.webp"
+				} else if (id%6==1){
+					gif="/static/party4.gif"
+				} else if (id%6==2){
+					gif="/static/party3.gif"
+				} else if (id%6==3){
+					gif="/static/party2.webp"
+				} else if (id%6==4){
+					gif="/static/party.webp"
+				} else if (id%6==5){
+					gif="/static/party6.gif"
+				}
+				$("#party_modal").find("img").attr("src",gif);
 				$("#party_modal").modal("show");
 				$('#magazine').turn('next');
 			} else{
@@ -375,7 +453,7 @@
 				if (e.keyCode==37)
 						$('#magazine').turn('previous');
 				else if (e.keyCode==39){
-						// $('#magazine').turn('next');	
+						$('#magazine').turn('next');	
 				}
 						// $('#magazine').turn('next');
 		});
