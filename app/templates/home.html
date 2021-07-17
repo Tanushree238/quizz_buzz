@@ -11,7 +11,7 @@
 <style>
 	body{
 		overflow: hidden;
-		background-image:url("/static/12837.jpg");
+		background-image:url("/static/SL_050721_42770_03.jpg");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		height: 100vh;
@@ -67,12 +67,12 @@
 	}
 
 	#get_started_btn{
-		position: absolute;bottom: 10px;left: 50%;transform: translateX(-50%);
+		position: absolute;bottom: 14%;left: 50%;transform: translateX(-50%);
 		padding: 6px 40px;
 		border-radius:5px;
-		background-color: #22DDA1;
-		border:1px solid #22DDA1;
-		color:#111;
+		background-color: #2b88d4;
+		border:1px solid #2b88d4;
+		color:#fff;
 	}
 	#get_started_btn:hover{
 		border:1px solid #111;
@@ -97,7 +97,7 @@
 	}
 	.full_modal .modal-content{background: #fff; border: none;border-radius: 0;}
 	.hash_bg{
-		background-image:url("/static/hash_bg.jpg");
+		background-image:url("/static/left.jpg");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		border-bottom-left-radius: .5em;
@@ -111,6 +111,7 @@
 	}
 	.hashtag{
 		word-break: break-word;
+		color:#fafafa;
 	}
 	.next_btn{
 		position: absolute;
@@ -127,26 +128,26 @@
 		max-height: 90vh;
 	}
 	.home_card #get_started_btn{
-		position: absolute;bottom: 37px;left: 50%;transform: translateX(-50%);
+		position: absolute;bottom: 14%;left: 50%;transform: translateX(-50%);
 		padding: 10px 40px;
-		border:1px solid #22DDA1;
+		border:1px solid #2b88d4;
 	}
 	.home_card #get_started_btn:hover{
-		position: absolute;bottom: 37px;left: 50%;transform: translateX(-50%);
+		position: absolute;bottom: 14%;left: 50%;transform: translateX(-50%);
 		border:1px solid #111;
 	}
 	
 </style>
 <body class="">
-	<div class="container text-center">
-		<div class="home_card mx-auto my-3">
+	<div class="container text-center pt-3">
+		<div class="home_card mx-auto">
 			<button class="btn btn-primary" id="get_started_btn">GET STARTED!</button>
-			<img class= "img-fluid" src ="/static/puzzle_final.png">
+			<img class= "img-fluid" src ="/static/front.png">
 		</div>
 		<div id="magazine">
 			<div class="even_page hard">
 				<button class="btn btn-primary" id="get_started_btn">GET STARTED!</button>
-				<img class= "fcover img-fluid" src ="/static/puzzle_final.png">
+				<img class= "fcover img-fluid" src ="/static/front.png">
 			</div>
 			{% for question in questions %}
   				<div class="page4">
@@ -167,7 +168,6 @@
 										<input type="radio" name="ans{{question['no.']}}" value="{{ option }}" onchange="handlesubmit(this)">
 		  								<label for="{{ option }}">{{ option }}</label><br>
 	  								{% endfor %}
-	  								<p id="corr_ans{{question['no.']}}" class="d-none">{{ question.answer }}</p>
 								</div>
 							</div>	
 							<button class="btn btn-success answer d-none" id="submit_{{question['no.']}}">Submit</button>
@@ -180,18 +180,11 @@
 							<h4>{{ question.statement }}</h4>
 							<div class="question_data row mx-0 my-4 text-left px-5">
 								<div class="col-md-12 text-center">
-									<pre class="blanks" id="blanks_{{question['no.']}}">_ A  _ _ _ _</pre>
-									<input type="text" id="ques_input" name="ans{{question['no.']}}" placeholder="*One Alphabet only" class="form-control"
-									 onclick="handleinput(this)" autocomplete="off">
-									<p class="error d-none text-danger mb-0">*One alphabet only.</p>
-	  								<p id="corr_ans{{question['no.']}}" class="word_ans d-none">{{ question.answer }}</p>
+									<input type="text" id="ques_input_{{question['no.']}}" name="ans{{question['no.']}}" class="form-control"
+									 oninput="handlesubmit(this)" autocomplete="off">
 								</div>
 							</div>	
-							<div id="badtry_{{question['no.']}}" class="d-none text-center">
-								<img src="/static/bad_try.gif">
-								<h6></h6>
-							</div>
-							<!-- <button class="btn btn-success check" id="submit_{{question['no.']}}">Check</button> -->
+							<button class="btn btn-success answer d-none" id="submit_{{question['no.']}}">Submit</button>
 						</div>
 					</div>
 				{% endif %}
@@ -220,14 +213,48 @@
 			<div class="page4">
 				<div class="hash_bg h-100">
 					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
-						<h1 class="pb-5 hashtag"><i>#Behekne_wale_sabhi_h_samjhane_vale_bano</i></h1>
+						<img src="/static/kk/  (11).jpeg" class="img-fluid">
 					</div>
 				</div>
 			</div>
 			<div class="even_page page3">
 				<div class="hash_bg h-100">
 					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
-						<h1 class="pb-5 hashtag"><i>#I_am_Leaving_nw_Discuss_by_Yourself</i></h1>
+						<img src="/static/kk/  (12).jpeg" class="img-fluid">
+						<button class="btn next_btn">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="page4">
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<img src="/static/kk/  (13).jpeg" class="img-fluid">
+					</div>
+				</div>
+			</div>
+			<div class="even_page page3">
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<img src="/static/kk/  (14).jpeg" class="img-fluid">
+						<button class="btn next_btn">
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="page4">
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<h1 class="pb-5 hashtag"><i>#jj</i></h1>
+					</div>
+				</div>
+			</div>
+			<div class="even_page page3">
+				<div class="hash_bg h-100">
+					<div class="hash_bg_layer h-100 w-100 d-flex flex_wrap h-100 align-items-center justify-content-center px-5">
+						<img src="/static/kk/  (15).jpeg" class="img-fluid">
 						<button class="btn next_btn">
 							<i class="fa fa-arrow-right" aria-hidden="true"></i>
 						</button>
@@ -235,7 +262,7 @@
 				</div>
 			</div>
 			<div class="hard page4 text-center">
-				<img class= "bcover img-fluid h-100" src ="/static/back_cover.png">
+				<img class= "bcover img-fluid h-100" src ="/static/back.png">
 			</div>
 		</div>
 	</div>
@@ -327,74 +354,74 @@
 			$('#magazine').turn('next');
 		});
 
-		$(document).on('keyup','#ques_input',function(){
-			var val = $($(this).parent().find('input')).val().toLowerCase();
-			$($(this).parent().find('input')).val( '' );
-			var ans_original = $(this).parent().find('[id^=corr_ans]').text().trim();
-			var blanks_block = $(this).parent().find('[id^=blanks_]');
-			var ans = ans_original.toLowerCase();
-			var id = $($(this).parent().find('input')).attr('name').substring(3);
-			$("#badtry_"+id).removeClass("d-block").addClass("d-none");
-			$("#badtry_"+id).find('h6').text("")
-			if (val.length==1){
-				var index = ans.indexOf(val);
-				if( index!==-1 ){
-					$(".error").removeClass("d-block").addClass("d-none");
-					window.char_record.add( val );
-					new_blank_string = "";
-					Array.from(ans).forEach( (element,i) => {
-						var end_with;
-						(i===ans_original.length-1) ? end_with="" : end_with=" "; 
-						if( element==='\\' ){
-							new_blank_string += "\n"+end_with;
-						}else if( window.char_record.has(element) ){
-							new_blank_string += ans_original[i]+end_with;
-						}else if( element===" " ){
-							new_blank_string += " "+end_with;
-						}else{
-							new_blank_string += "_"+end_with;
-						}
-					});
-					$( blanks_block ).text( new_blank_string );
-					console.log(new_blank_string.replace(/\s/g,"").toLowerCase(),ans.replace(/\s/g,"").replace(/\\/g,""))
-					if( new_blank_string.indexOf("_")===-1 && new_blank_string.replace(/\s/g,"").toLowerCase()===ans.replace(/\s/g,"").replace(/\\/g,"") ){
-						get_result("r_"+id);
-						if (id%6==0){
-							gif="/static/party1.webp"
-						} else if (id%6==1){
-							gif="/static/party4.gif"
-						} else if (id%6==2){
-							gif="/static/party3.gif"
-						} else if (id%6==3){
-							gif="/static/party2.webp"
-						} else if (id%6==4){
-							gif="/static/party.webp"
-						} else if (id%6==5){
-							gif="/static/party6.gif"
-						}
-						$("#party_modal").find("img").attr("src",gif);
-						$("#party_modal").modal("show");
-						$('#magazine').turn('next');
-						window.char_record = new Set();
-						window.word_try = 0;
-					}
-				}else{
-					window.word_try += 1;
-					if( window.word_try>=3 ){
-						get_result("w_"+id);
-						$("#sorry_modal").modal("show");
-						$('#magazine').turn('next');
-						window.char_record = new Set();
-						window.word_try = 0;
-					}else{
-						$("#badtry_"+id).removeClass("d-none").addClass("d-block");
-						$("#badtry_"+id).find('h6').text((3-window.word_try) +" Tries Left!!")
-					}
-				}
-			} else{
-				$(".error").removeClass("d-none").addClass("d-block");
-			}
-		});
+		// $(document).on('keyup','#ques_input',function(){
+		// 	var val = $($(this).parent().find('input')).val().toLowerCase();
+		// 	$($(this).parent().find('input')).val( '' );
+		// 	var ans_original = $(this).parent().find('[id^=corr_ans]').text().trim();
+		// 	var blanks_block = $(this).parent().find('[id^=blanks_]');
+		// 	var ans = ans_original.toLowerCase();
+		// 	var id = $($(this).parent().find('input')).attr('name').substring(3);
+		// 	$("#badtry_"+id).removeClass("d-block").addClass("d-none");
+		// 	$("#badtry_"+id).find('h6').text("")
+		// 	if (val.length==1){
+		// 		var index = ans.indexOf(val);
+		// 		if( index!==-1 ){
+		// 			$(".error").removeClass("d-block").addClass("d-none");
+		// 			window.char_record.add( val );
+		// 			new_blank_string = "";
+		// 			Array.from(ans).forEach( (element,i) => {
+		// 				var end_with;
+		// 				(i===ans_original.length-1) ? end_with="" : end_with=" "; 
+		// 				if( element==='\\' ){
+		// 					new_blank_string += "\n"+end_with;
+		// 				}else if( window.char_record.has(element) ){
+		// 					new_blank_string += ans_original[i]+end_with;
+		// 				}else if( element===" " ){
+		// 					new_blank_string += " "+end_with;
+		// 				}else{
+		// 					new_blank_string += "_"+end_with;
+		// 				}
+		// 			});
+		// 			$( blanks_block ).text( new_blank_string );
+		// 			console.log(new_blank_string.replace(/\s/g,"").toLowerCase(),ans.replace(/\s/g,"").replace(/\\/g,""))
+		// 			if( new_blank_string.indexOf("_")===-1 && new_blank_string.replace(/\s/g,"").toLowerCase()===ans.replace(/\s/g,"").replace(/\\/g,"") ){
+		// 				get_result("r_"+id);
+		// 				if (id%6==0){
+		// 					gif="/static/party1.webp"
+		// 				} else if (id%6==1){
+		// 					gif="/static/party4.gif"
+		// 				} else if (id%6==2){
+		// 					gif="/static/party3.gif"
+		// 				} else if (id%6==3){
+		// 					gif="/static/party2.webp"
+		// 				} else if (id%6==4){
+		// 					gif="/static/party.webp"
+		// 				} else if (id%6==5){
+		// 					gif="/static/party6.gif"
+		// 				}
+		// 				$("#party_modal").find("img").attr("src",gif);
+		// 				$("#party_modal").modal("show");
+		// 				$('#magazine').turn('next');
+		// 				window.char_record = new Set();
+		// 				window.word_try = 0;
+		// 			}
+		// 		}else{
+		// 			window.word_try += 1;
+		// 			if( window.word_try>=3 ){
+		// 				get_result("w_"+id);
+		// 				$("#sorry_modal").modal("show");
+		// 				$('#magazine').turn('next');
+		// 				window.char_record = new Set();
+		// 				window.word_try = 0;
+		// 			}else{
+		// 				$("#badtry_"+id).removeClass("d-none").addClass("d-block");
+		// 				$("#badtry_"+id).find('h6').text((3-window.word_try) +" Tries Left!!")
+		// 			}
+		// 		}
+		// 	} else{
+		// 		$(".error").removeClass("d-none").addClass("d-block");
+		// 	}
+		// });
 		
 		function get_result(id){
 			$.ajax({
@@ -409,7 +436,7 @@
 						$("#result_text"+id).removeClass("d-none").addClass("d-block");
 					} else{
 						console.log($("#result_image"+id).find('img'));
-						$("#result_image"+id).find('img').attr('src',"/static/"+response['content']);
+						$("#result_image"+id).find('img').attr('src',"/static/kk/"+response['content']);
 						$("#result_image"+id).removeClass("d-none").addClass("d-block");
 					}
 					setTimeout(function(){ 
@@ -422,33 +449,31 @@
 
 		$(document).on('click','.answer',function(){
 			var id=$(this).attr('id').split("_")[1];
-			var given_ans=$("input[name='ans"+id+"']:checked").val().trim();
-			var correct_ans=$("#corr_ans"+id).text().trim();
-			if (given_ans==correct_ans){
-				get_result("r_"+id);
-				if (id%6==0){
-					gif="/static/party1.webp"
-				} else if (id%6==1){
-					gif="/static/party4.gif"
-				} else if (id%6==2){
-					gif="/static/party3.gif"
-				} else if (id%6==3){
-					gif="/static/party2.webp"
-				} else if (id%6==4){
-					gif="/static/party.webp"
-				} else if (id%6==5){
-					gif="/static/party6.gif"
-				}
-				$("#party_modal").find("img").attr("src",gif);
-				$("#party_modal").modal("show");
-				$('#magazine').turn('next');
-			} else{
-				get_result("w_"+id);
-				$("#sorry_modal").modal("show");
-				$('#magazine').turn('next');
-			}
-			
-			
+			// var given_ans=$("input[name='ans"+id+"']:checked").val().trim();
+			// var correct_ans=$("#corr_ans"+id).text().trim();
+			// if (given_ans==correct_ans){
+			// 	if (id%6==0){
+			// 		gif="/static/party1.webp"
+			// 	} else if (id%6==1){
+			// 		gif="/static/party4.gif"
+			// 	} else if (id%6==2){
+			// 		gif="/static/party3.gif"
+			// 	} else if (id%6==3){
+			// 		gif="/static/party2.webp"
+			// 	} else if (id%6==4){
+			// 		gif="/static/party.webp"
+			// 	} else if (id%6==5){
+			// 		gif="/static/party6.gif"
+			// 	}
+			// 	$("#party_modal").find("img").attr("src",gif);
+			// 	$("#party_modal").modal("show");
+			// 	$('#magazine').turn('next');
+			// } else{
+			// 	get_result("w_"+id);
+			// 	$("#sorry_modal").modal("show");
+			// }
+			get_result("r_"+id);
+			$('#magazine').turn('next');
 		});
 
 		$(window).bind('keydown', function(e){
